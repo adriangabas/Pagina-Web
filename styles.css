@@ -1,17 +1,38 @@
+/* =========================
+   VARIABLES Y BASE
+   ========================= */
+
+/* Variables globales de colores, radios y sombras */
 :root{
-  --accent: #ff6b6b;        
-  --text: #222;
-  --muted: #666;
-  --card: #ffffff;
-  --bg: #f5f7fb;
-  --radius: 14px;
-  --shadow: 0 12px 30px rgba(0,0,0,.08);
+  --accent: #ff6b6b;                  /* color principal (marca) */
+  --text: #222;                       /* texto principal */
+  --muted: #666;                      /* texto secundario */
+  --card: #ffffff;                    /* fondo de tarjetas/bloques */
+  --bg: #f5f7fb;                      /* fondo general */
+  --radius: 14px;                     /* radio por defecto */
+  --shadow: 0 12px 30px rgba(0,0,0,.08); /* sombra suave */
 }
 
-html, body { font-family: "Poppins", system-ui, sans-serif; color: var(--text); background: var(--bg); }
+/* Fuente y colores base */
+html, body {
+  font-family: "Poppins", system-ui, sans-serif;
+  color: var(--text);
+  background: var(--bg);
+  margin: 0;
+  padding: 0;
+}
 
+/* Contenedor genérico para centrar contenido */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
 
-/* Header */
+/* =========================
+   HEADER + NAVEGACIÓN
+   ========================= */
+
 header {
   display: flex;
   justify-content: space-between;
@@ -21,7 +42,6 @@ header {
   color: white;
 }
 
-/* Logo */
 header .logo {
   display: flex;
   align-items: center;
@@ -32,11 +52,10 @@ header .logo img {
   margin-right: 0.5rem;
 }
 
-/* Navegación */
 nav ul {
-  list-style: none;   /* Quitar viñetas */
+  list-style: none;
   display: flex;
-  gap: 1.5rem;        /* Espaciado entre enlaces */
+  gap: 1.5rem;
   margin: 0;
   padding: 0;
 }
@@ -46,12 +65,60 @@ nav a {
   text-decoration: none;
   font-weight: bold;
 }
-
 nav a:hover {
   text-decoration: underline;
 }
 
-/* Hero */
+/* =========================
+   BOTONES
+   ========================= */
+
+/* Botón base global */
+.btn {
+  display: inline-block;
+  padding: .8rem 1.4rem;
+  background: var(--accent);
+  color: #fff;
+  border-radius: var(--radius);
+  text-decoration: none;
+  font-weight: 700;
+  transition: transform .15s ease, opacity .15s ease, box-shadow .15s ease;
+  box-shadow: 0 6px 16px rgba(255,107,107,.25);
+}
+.btn:hover {
+  transform: translateY(-1px);
+  opacity: .96;
+}
+
+/* Botón de ancho completo (para tarjetas de producto) */
+.btn-block {
+  display: block;
+  width: 100%;
+  text-align: center;
+  margin-top: .25rem;
+}
+
+/* Botón contorno (ej. Conócenos, Contacto) */
+.btn-outline {
+  display: inline-block;
+  border: 2px solid var(--accent);
+  background: transparent;
+  color: var(--accent);
+  padding: .7rem 1.1rem;
+  border-radius: 10px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: .2s ease;
+}
+.btn-outline:hover {
+  background: var(--accent);
+  color: #fff;
+}
+
+/* =========================
+   HERO
+   ========================= */
+
 #hero {
   display: flex;
   flex-direction: column;
@@ -76,62 +143,38 @@ nav a:hover {
   text-shadow: 2px 2px 6px rgba(0,0,0,0.6);
 }
 
-#hero .btn {
-  background: #ff6b6b;
-  color: white;
-  padding: 0.75rem 1.5rem;
-  text-decoration: none;
-  border-radius: 5px;
-  font-weight: bold;
-  transition: background 0.3s ease;
-}
+/* =========================
+   CONÓCENOS
+   ========================= */
 
-#hero .btn:hover {
-  background: #ff3b3b;
-}
-
-/* Contenedor genérico */
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 2rem 1rem;
-}
-
-/* Conócenos */
+/* Versión simple con fondo gris */
 .about {
   display: grid;
   gap: 1.5rem;
   align-items: center;
-  background: #f9f9f9; /* gris muy claro para resaltar */
+  background: #f9f9f9;
   padding: 3rem 2rem;
   border-radius: 8px;
 }
 
-
-.about h2 {
-  margin-bottom: .75rem;
-}
-
+.about h2 { margin-bottom: .75rem; }
 .about ul {
   margin-top: .5rem;
   padding-left: 1.25rem;
 }
-
 .about-img img {
   width: 100%;
   border-radius: 8px;
   display: block;
 }
 
-/* Vista escritorio: 2 columnas */
+/* Layout responsive para 2 columnas */
 @media (min-width: 769px) {
-  .about {
-    grid-template-columns: 1.1fr 0.9fr;
-  }
+  .about { grid-template-columns: 1.1fr 0.9fr; }
 }
 
-/* ---------- Conócenos ------------- */
-.about .about-wrap{
+/* Estilo avanzado (tarjeta blanca con sombra) */
+.about .about-wrap {
   display: grid;
   gap: 2rem;
   align-items: center;
@@ -141,38 +184,37 @@ nav a:hover {
   padding: 2rem;
 }
 
-.overline{
+.overline {
   text-transform: uppercase;
   letter-spacing: .12em;
   font-size: .8rem;
   color: var(--muted);
 }
 
-.about h2{
+.about h2 {
   font-size: clamp(1.6rem, 2.2vw, 2.2rem);
   margin: .25rem 0 1rem;
 }
+.about .accent { color: var(--accent); }
 
-.about .accent{ color: var(--accent); }
-
-.about .lead{
+.about .lead {
   color: var(--muted);
   line-height: 1.75;
   margin-bottom: 1rem;
 }
 
-.features{
+.features {
   list-style: none;
   display: grid;
   gap: .5rem;
   margin: 1rem 0 1.5rem;
   padding: 0;
 }
-.features li{
+.features li {
   position: relative;
   padding-left: 1.9rem;
 }
-.features li::before{
+.features li::before {
   content: "";
   position: absolute; left: 0; top: .2rem;
   width: 1.2rem; height: 1.2rem;
@@ -181,37 +223,111 @@ nav a:hover {
   box-shadow: 0 2px 6px rgba(0,0,0,.15) inset;
 }
 
-/* Botón contorno */
-.btn-outline{
-  display: inline-block;
-  border: 2px solid var(--accent);
-  color: var(--accent);
-  padding: .7rem 1.1rem;
-  border-radius: 10px;
-  text-decoration: none;
-  font-weight: 600;
-  transition: .2s ease;
-}
-.btn-outline:hover{ background: var(--accent); color: #fff; }
-
-/* Imagen */
-.about-media{
+.about-media {
   overflow: hidden;
   border-radius: var(--radius);
 }
-.about-media img{
+.about-media img {
   width: 100%; height: 100%;
   object-fit: cover;
   display: block;
   transform: scale(1.02);
   transition: transform .4s ease;
 }
-.about-media:hover img{ transform: scale(1.06); }
+.about-media:hover img { transform: scale(1.06); }
 
-/* Layout responsive */
 @media (min-width: 900px){
-  .about .about-wrap{
+  .about .about-wrap {
     grid-template-columns: 1.1fr 1fr;
-    padding: 2.5rem 2.5rem 2.5rem 2.5rem;
+    padding: 2.5rem;
   }
+}
+
+/* =========================
+   PRODUCTOS
+   ========================= */
+
+.products-header {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+.products-header h2 {
+  font-size: clamp(1.6rem, 2.5vw, 2.2rem);
+  margin-bottom: .25rem;
+}
+.products-header .muted { color: var(--muted); }
+
+.products-grid {
+  display: grid;
+  gap: 1.25rem;
+  grid-template-columns: 1fr; /* móvil */
+}
+@media (min-width: 640px) {
+  .products-grid { grid-template-columns: repeat(2, 1fr); } /* tablet */
+}
+@media (min-width: 980px) {
+  .products-grid { grid-template-columns: repeat(3, 1fr); } /* escritorio */
+}
+
+.product-card {
+  background: var(--card);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.product-img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  display: block;
+  transition: transform .35s ease;
+}
+
+.product-body {
+  padding: 1rem;
+  display: grid;
+  gap: .6rem;
+}
+.product-title { font-weight: 700; }
+.product-desc { color: var(--muted); line-height: 1.5; }
+
+.product-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.price {
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+
+.badge {
+  background: var(--accent);
+  color: #fff;
+  font-size: .75rem;
+  padding: .25rem .5rem;
+  border-radius: 999px;
+}
+.badge-ghost {
+  background: transparent;
+  color: var(--accent);
+  border: 1.5px solid var(--accent);
+}
+
+.product-card:hover .product-img {
+  transform: scale(1.05);
+}
+
+/* =========================
+   FOOTER
+   ========================= */
+
+footer {
+  text-align: center;
+  padding: 2rem 1rem 3rem;
+  color: var(--muted);
+  font-size: .9rem;
 }
