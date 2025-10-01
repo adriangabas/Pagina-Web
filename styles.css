@@ -11,6 +11,8 @@
   --bg: #f5f7fb;                      /* fondo general */
   --radius: 14px;                     /* radio por defecto */
   --shadow: 0 12px 30px rgba(0,0,0,.08); /* sombra suave */
+  --overlay: rgba(0,0,0,.35);      /* intensidad base del overlay */
+  --overlay-strong: rgba(0,0,0,.55); /* más fuerte para móvil/fotos muy claras */
 }
 
 /* Fuente y colores base */
@@ -47,9 +49,12 @@ header .logo {
   align-items: center;
 }
 
+/* Logo */
 header .logo img {
-  width: 40px;
+  width: 40px;        /* controla el tamaño real */
+  height: auto;       /* mantiene proporción */
   margin-right: 0.5rem;
+  object-fit: contain; /* evita deformación */
 }
 
 nav ul {
@@ -119,29 +124,95 @@ nav a:hover {
    HERO
    ========================= */
 
-#hero {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
+/* ---------- HERO como carrusel CSS (sin JS) ---------- */
+
+/* Contenedor hero: capa base y centrado del texto */
+#hero{
+  position: relative;                 /* para posicionar el slider dentro */
   height: 90vh;
-  background: url("img/hero.jpg") no-repeat center center/cover;
-  color: white;
-  padding: 2rem;
+  display: flex; justify-content: center; align-items: center;
+  padding: 2rem; color: #fff; text-align: center;
+  overflow: hidden;                   /* oculta lo que se salga */
 }
 
-#hero h1 {
-  font-size: 3rem;
-  margin-bottom: 1rem;
-  text-shadow: 2px 2px 6px rgba(0,0,0,0.6);
+/* Capa del slider que ocupa todo el hero */
+#hero .slider{
+  position: absolute; inset: 0;       /* top/right/bottom/left: 0 */
 }
 
-#hero p {
-  font-size: 1.2rem;
-  margin-bottom: 2rem;
-  text-shadow: 2px 2px 6px rgba(0,0,0,0.6);
+/* Todas las imágenes apiladas una encima de otra */
+#hero .slider img{
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;                  /* recorta sin deformar */
+  opacity: 0;                         /* invisibles por defecto */
+  animation: heroFade 18s infinite;   /* 3 imágenes → 18s (6s c/u) */
 }
+
+/* Retrasos para repartir la animación: 0s, 6s, 12s */
+#hero .slider img:nth-child(1){ animation-delay: 0s;  }
+#hero .slider img:nth-child(2){ animation-delay: 6s;  }
+#hero .slider img:nth-child(3){ animation-delay: 12s; }
+
+/* Animación: aparece, se mantiene, se desvanece */
+@keyframes heroFade{
+  0%   { opacity: 0; }
+  8%   { opacity: 1; }   /* entra */
+  30%  { opacity: 1; }   /* permanece visible */
+  38%  { opacity: 0; }   /* sale */
+  100% { opacity: 0; }
+}
+
+/* Texto por encima de las imágenes (z-index) */
+.hero-text{ position: relative; z-index: 1; }
+.hero-text h1, .hero-text p{
+  text-shadow: 2px 2px 6px rgba(0,0,0,.6);  /* legibilidad */
+}
+
+/* Respeto a usuarios que prefieren menos movimiento */
+@media (prefers-reduced-motion: reduce){
+  #hero .slider img{ animation: none; opacity: 1; }
+  #hero .slider img:not(:first-child){ display: none; }
+}
+
+/* Overlay oscuro para legibilidad del hero (funciona con fondo fijo o carrusel) */
+#hero{
+  position: relative;               /* capa base para ::before */
+  isolation: isolate;               /* asegura la pila de capas del hero */
+}
+
+/* Capa oscura por encima de la imagen y por debajo del texto */
+#hero::before{
+  content:"";
+  position: absolute;
+  inset: 0;                         /* top/right/bottom/left = 0 */
+  z-index: 0;                       /* debajo del texto (.hero-text) */
+  /* Gradiente sutil: un pelín más oscuro en la parte baja */
+  background:
+    linear-gradient(180deg, transparent 0%, var(--overlay) 55%, var(--overlay) 100%);
+  pointer-events: none;             /* no bloquea clicks del botón */
+}
+
+/* Aseguramos que el texto quede por encima del overlay */
+.hero-text{ position: relative; z-index: 1; }
+
+/* Si estás usando carrusel: mantenlo al fondo */
+#hero .slider{ position: absolute; inset:0; z-index: -1; } /* fondo real */
+
+/* En móviles, subimos un poco la intensidad para fotos muy claras */
+@media (max-width: 480px){
+  #hero::before{
+    background:
+      linear-gradient(180deg, transparent 0%, var(--overlay-strong) 55%, var(--overlay-strong) 100%);
+  }
+}
+
+/* Respeta a quien prefiera menos efectos */
+@media (prefers-reduced-transparency: reduce){
+  #hero::before{ background: var(--overlay); }
+}
+
+
 
 /* =========================
    CONÓCENOS
@@ -417,3 +488,76 @@ input:focus, textarea:focus{
   border-color: var(--accent);
   color: var(--accent);
 }
+
+/* =========================
+   FOOTER
+   ========================= */
+.site-footer{
+  background: #1a1a1f;          /* oscuro para contrastar */
+  color: #fff;
+  margin-top: 2rem;
+  padding-top: 2.5rem;
+}
+
+.footer-grid{
+  display: grid;
+  gap: 1.5rem;
+}
+
+.footer-brand h3{
+  margin: 0 0 .25rem;
+  font-size: 1.2rem;
+}
+.site-footer .muted{ color: #bdbdcc; }
+
+.footer-nav{
+  display: grid;
+  gap: .4rem;
+}
+.footer-nav a{
+  color: #e7e7ef;
+  text-decoration: none;
+}
+.footer-nav a[aria-disabled="true"]{
+  opacity: .65; pointer-events: none;  /* marcados como ejemplo */
+}
+.footer-nav a:hover{ text-decoration: underline; }
+
+.footer-contact ul{
+  list-style: none; margin: 0; padding: 0;
+  display: grid; gap: .35rem;
+}
+
+/* Layout 3 columnas en escritorio */
+@media (min-width: 900px){
+  .footer-grid{ grid-template-columns: 2fr 1.2fr 1.4fr; }
+}
+
+/* Franja inferior */
+.footer-bottom{
+  border-top: 1px solid rgba(255,255,255,.1);
+  margin-top: 1.5rem;
+  padding: 1rem 0 2rem;
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.footer-bottom p{
+  margin: 0; color: #cfcfe0; font-size: .95rem;
+}
+
+/* Botón "Volver arriba" */
+.to-top{
+  color: #fff;
+  text-decoration: none;
+  background: var(--accent);
+  padding: .5rem .8rem;
+  border-radius: 999px;
+  font-weight: 700;
+  transition: transform .15s ease, opacity .15s ease;
+  box-shadow: 0 6px 16px rgba(255,107,107,.25);
+}
+.to-top:hover{ transform: translateY(-1px); opacity: .96; }

@@ -13,8 +13,8 @@
 
 <body>
     <header>
-        <div>
-            <img src="assets/img/logo.png" alt="Logo de Bike Hero">
+        <div class="logo">
+            <img src="img/logo.png" alt="Logo de Bike Hero">
             <span>Bike Hero</span>
         </div>
 
@@ -29,10 +29,21 @@
 
     <main>
         <section id="hero">
-            <h1>Bienvenido a Bike Hero</h1>
-            <p>Tu tienda de confianza para bicicletas</p>
-            <a href="#productos" class="btn">Ver bicicletas</a>
+            <!-- Carrusel: imágenes de fondo apiladas -->
+            <div class="slider">
+                <img src="img/hero1.jpg" alt="Bici en montaña al amanecer">
+                <img src="img/hero2.jpg" alt="Ciclista en carretera">
+                <img src="img/hero3.jpg" alt="Mecánico ajustando bicicleta en taller">
+            </div>
+
+            <!-- Texto por encima del carrusel -->
+            <div class="hero-text">
+                <h1>Bienvenido a Bike Hero</h1>
+                <p>Tu tienda de confianza para bicicletas y accesorios.</p>
+                <a href="#productos" class="btn">Ver bicicletas</a>
+            </div>
         </section>
+
 
         <section id="conocenos" class="about container">
             <div class="about-wrap">
@@ -154,6 +165,49 @@
             </div>
 
         </section>
+
+        <!-- =========================
+     FOOTER
+     ========================= -->
+        <footer class="site-footer">
+            <div class="container footer-grid">
+                <!-- Bloque marca -->
+                <div class="footer-brand">
+                    <h3>Bike Hero</h3>
+                    <p class="muted">Tienda & Taller de bicicletas — MTB, carretera y gravel.</p>
+                </div>
+
+                <!-- Enlaces rápidos -->
+                <nav class="footer-nav" aria-label="Enlaces del pie">
+                    <a href="#conocenos">Conócenos</a>
+                    <a href="#productos">Productos</a>
+                    <a href="#contacto">Contacto</a>
+                    <a href="#" aria-disabled="true">Política de privacidad</a>
+                    <a href="#" aria-disabled="true">Aviso legal</a>
+                </nav>
+
+                <!-- Datos de contacto -->
+                <div class="footer-contact">
+                    <ul>
+                        <li><strong>Tel.:</strong> 600 123 456</li>
+                        <li><strong>Email:</strong> hola@bikehero.com</li>
+                        <li><strong>Dirección:</strong> C/ Rodadores, 12 · Zaragoza</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Línea inferior -->
+            <div class="footer-bottom">
+                <p>© <span id="year"></span> Bike Hero. Todos los derechos reservados.</p>
+                <a href="#hero" class="to-top">Volver arriba ↑</a>
+            </div>
+        </footer>
+
+        <!-- JS opcional: año automático -->
+        <script>
+            document.getElementById('year').textContent = new Date().getFullYear();
+        </script>
+
 
 
 
